@@ -9,6 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { setCategories, setLocations } from "@/lib/redux/slices/eventSlice";
 import api from "@/lib/axiosInstance";
 import { IEventCategoryParam } from "@/interface/event-category.interface";
+import axios from "axios";
 
 export default function HomePage() {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -26,7 +27,7 @@ export default function HomePage() {
 
     const fetchEvents = async () => {
       try {
-        const res = await api.get(
+        const res = await axios.get(
           `${
             process.env.NEXT_PUBLIC_API_URL
           }/api/eventorder/events/search?keyword=${encodeURIComponent(keyword)}`
@@ -44,7 +45,7 @@ export default function HomePage() {
   }, [keyword]);
 
   useEffect(() => {
-    api
+    axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/eventorder/events`)
       .then((res) => {
         const eventList = res.data.data as IEvent[];
@@ -60,7 +61,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    api
+    axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/eventorder/event-categories`)
       .then((res) => {
         const categoryList = res.data.data as IEventCategoryParam[];

@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { setRemainingSeats } from "@/lib/redux/slices/seatSlice";
+import axios from "axios";
 
 registerLocale("id", id);
 
@@ -111,7 +112,7 @@ export default function EventDetail() {
       localStorage.getItem("user") || "null"
     ) as IUserParam;
     setStoredUser(user);
-    api
+    axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL}/api/eventorder/event-categories`,
         {
